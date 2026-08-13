@@ -15,3 +15,12 @@ app = FastAPI(title="Payments API", lifespan=lifespan)
 async def health():
     return {"status": "ok"}
 
+@app.post("/create_payment")
+async def create_payment(amount: float, currency: str, db=Depends(get_db_conn)):
+    payment_id = queries.create_payment(db, amount=amount, currency=currency, status="pending")
+    return {"id": payment_id}
+
+@app.get("/list_payments")
+async def list_payments(db=Depends(get_db_conn)):
+    payments = queries.list_payments(db)
+    return {"payments": payments}
