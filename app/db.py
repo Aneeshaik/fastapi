@@ -1,6 +1,7 @@
+from pathlib import Path
+
 import aiosql
 import asyncpg
-from pathlib import Path
 
 QUERIES_DIR = Path(__file__).parent / "queries"
 queries = aiosql.from_path(QUERIES_DIR, "asyncpg")

@@ -17,3 +17,6 @@ dependencies = [
     "ruff>=0.16.3",
     "uvicorn>=0.52.1",
 ]
+
+[tool.ruff.lint]
+ignore = ["B008"]
