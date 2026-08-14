@@ -24,3 +24,7 @@ async def create_payment(amount: float, currency: str, db=Depends(get_db_conn)):
 async def list_payments(db=Depends(get_db_conn)):
     payments = queries.list_payments(db)
     return {"payments": payments}
+
+@app.get("/payments/{payment_id}")
+async def get_payment(payment_id: int, db=Depends(get_db_conn)):
+    return await queries.get_payment_by_id(db, payment_id=payment_id)
