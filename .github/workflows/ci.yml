@@ -77,8 +77,6 @@ jobs:
 
       - name: Build and push image
         uses: docker/build-push-action@v5
-        env:
-
         with:
           context: .
           push: true
