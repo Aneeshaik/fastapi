@@ -77,9 +77,11 @@ jobs:
 
       - name: Build and push image
         uses: docker/build-push-action@v5
+        env:
+
         with:
           context: .
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}:${{ github.sha }}
-            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/aneeshaik/fastapi:${{ github.sha }}
+            ghcr.io/aneeshaik/fastapi:latest
