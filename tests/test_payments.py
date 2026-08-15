@@ -18,7 +18,7 @@ def test_health_check(client):
 
 def test_create_payment(client):
     response = client.post(
-        "/payments",
+        "/create_payment",
         params={"amount": 100.50, "currency": "USD"},
     )
     assert response.status_code == 200
@@ -28,7 +28,7 @@ def test_create_payment(client):
 
 def test_get_payment_by_id(client):
     create_response = client.post(
-        "/payments",
+        "/create_payment",
         params={"amount": 250.00, "currency": "INR"},
     )
     payment_id = create_response.json()["id"]
