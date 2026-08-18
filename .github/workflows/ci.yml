@@ -87,3 +87,23 @@ jobs:
           tags: |
             ghcr.io/aneeshaik/fastapi:${{ github.sha }}
             ghcr.io/aneeshaik/fastapi:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ec2-user
+          key: ${{ secrets.EC2_SSH_KEY }}
+          envs: DATABASE_URL
+          script: |
+            docker pull ghcr.io/aneeshaik/fastapi:latest
+            docker stop payments-api || true
+            docker rm payments-api || true
+            docker run -d -p 8000:8000 --name payments-api -e DATABASE_URL="$DATABASE_URL" ghcr.io/aneeshaik/fastapi:latest
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
