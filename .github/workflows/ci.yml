@@ -102,6 +102,8 @@ jobs:
           envs: DATABASE_URL
           script: |
             docker pull ghcr.io/aneeshaik/fastapi:latest
+            docker stop payments-api 2>/dev/null || true
+            docker rm payments-api 2>/dev/null || true
             docker stop $(docker ps -q --filter "publish=8000") 2>/dev/null || true
             docker rm $(docker ps -aq --filter "publish=8000") 2>/dev/null || true
             docker run -d -p 8000:8000 --name payments-api -e DATABASE_URL="$DATABASE_URL" ghcr.io/aneeshaik/fastapi:latest
